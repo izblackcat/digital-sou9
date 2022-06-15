@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "593204005442",
+    "project_id": "digital-sou9",
+    "storage_bucket": "digital-sou9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593204005442:android:415a3be24cb40b0013bbdb",
+        "android_client_info": {
+          "package_name": "com.zarkaoui.digitalsou9"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593204005442-l972tndomote871ed10fvq85o5uh5roe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVNjVH6eFb4pRtSly7zsgkuLdNPqBnFIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593204005442-l972tndomote871ed10fvq85o5uh5roe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
