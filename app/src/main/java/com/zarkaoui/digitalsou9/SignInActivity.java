@@ -21,10 +21,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView register;
+
     private EditText emailLogin;
     private EditText passwordLogin;
     private Button signIn;
+    private TextView register;
+    private TextView forgotPassword;
 
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
@@ -38,6 +40,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         register = (TextView) findViewById(R.id.register);
         register.setOnClickListener(this);
+
+        forgotPassword = (TextView) findViewById(R.id.forgotPassword);
+        forgotPassword.setOnClickListener(this);
 
         signIn = (Button) findViewById(R.id.loginBtn);
         signIn.setOnClickListener(this);
@@ -55,6 +60,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.loginBtn:
                 userLogin();
+                break;
+            case R.id.forgotPassword:
+                startActivity(new Intent(SignInActivity.this, ForgotPasswordActivity.class));
                 break;
         }
     }
@@ -93,7 +101,15 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if(user.isEmailVerified()){
+                        //redirect to
+                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    } else {
+                        user.sendEmailVerification();
+                        Toast.makeText(SignInActivity.this, "Check your email inbox for verification link", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
 
                 } else {
                     Toast.makeText(SignInActivity.this, "Failed to login. Check your credentials and try again", Toast.LENGTH_LONG).show();
