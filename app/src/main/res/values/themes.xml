@@ -2,8 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.DigitalSou9" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="colorPrimary">@color/digital_sou9_color</item>
+        <item name="colorPrimaryVariant">@color/digital_sou9_color</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

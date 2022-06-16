@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         LottieAnimationView lottieAnimationView = findViewById(R.id.lottieAnimationView);
-        lottieAnimationView.animate().translationX(-1000).setDuration(1000).setStartDelay(2500);
+        lottieAnimationView.animate().translationX(-1500).setDuration(2000).setStartDelay(2500);
 
         TextView splashText = findViewById(R.id.splashText);
         splashText.animate().translationX(1000).setDuration(1000).setStartDelay(2500);
