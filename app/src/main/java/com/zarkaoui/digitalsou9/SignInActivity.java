@@ -90,7 +90,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if(password.length() < 8){
-            passwordLogin.setError("Min password length should be 8 characters!");
+            passwordLogin.setError("Minimum password length should be 8 characters!");
             passwordLogin.requestFocus();
             return;
         }
@@ -103,8 +103,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 if(task.isSuccessful()){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if(user.isEmailVerified()){
-                        //redirect to
-                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                        //redirect to profile
+                        startActivity(new Intent(SignInActivity.this, ProfileActivity.class));
+                        finish();
                     } else {
                         user.sendEmailVerification();
                         Toast.makeText(SignInActivity.this, "Check your email inbox for verification link", Toast.LENGTH_LONG).show();

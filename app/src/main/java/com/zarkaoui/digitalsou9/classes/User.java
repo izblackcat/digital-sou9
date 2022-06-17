@@ -4,15 +4,17 @@ public class User {
     private String fullName;
     private String email;
     private String phoneNumber;
+    private String profilePicture;
 
     public User(){
 
     }
 
-    public User(String fullName, String email, String phoneNumber) {
+    public User(String fullName, String email, String phoneNumber, String profilePicture) {
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.profilePicture = profilePicture;
     }
 
     public String getFullName() {
@@ -37,5 +39,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }
