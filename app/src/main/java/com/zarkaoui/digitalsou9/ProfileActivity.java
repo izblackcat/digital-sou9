@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String userId;
 
+    private Button editProfileBtn;
     private Button signOutBtn;
 
     @Override
@@ -33,7 +33,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        editProfileBtn = (Button) findViewById(R.id.editProfileBtn);
         signOutBtn = (Button) findViewById(R.id.signOutBtn);
+
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,10 +51,12 @@ public class ProfileActivity extends AppCompatActivity {
         userId = user.getUid();
 
 //        final TextView greeting = (TextView) findViewById(R.id.greeting);
-        final TextView fullName = (TextView) findViewById(R.id.fullName_textview);
+        final TextView fullName = (TextView) findViewById(R.id.fullName_textView);
         final TextView phoneNumber = (TextView) findViewById(R.id.phone_textView);
         final TextView email = (TextView) findViewById(R.id.email_textView);
         final ImageView profilePic = findViewById(R.id.user_imageView);
+
+
 
         databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,7 +79,18 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(ProfileActivity.this, "Something went wrong. Try agian later!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, "Something went wrong. Try again later!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                intent.putExtra("fullName", fullName.getText().toString());
+                intent.putExtra("phoneNumber", phoneNumber.getText().toString());
+                intent.putExtra("email", email.getText().toString());
+                startActivity(intent);
             }
         });
     }

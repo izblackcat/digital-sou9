@@ -79,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if(phone.isEmpty()){
-            phoneNumber.setError("Age is required!");
+            phoneNumber.setError("Phone Number is required!");
             phoneNumber.requestFocus();
             return;
         }
