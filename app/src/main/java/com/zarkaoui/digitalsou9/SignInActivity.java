@@ -103,8 +103,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 if(task.isSuccessful()){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if(user.isEmailVerified()){
-                        //redirect to profile
-                        startActivity(new Intent(SignInActivity.this, ProfileActivity.class));
+                        //redirect to categories activity:
+                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
                         finish();
                     } else {
                         user.sendEmailVerification();

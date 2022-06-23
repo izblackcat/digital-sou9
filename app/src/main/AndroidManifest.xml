@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zarkaoui.digitalsou9" >
+    package="com.zarkaoui.digitalsou9">
 
     <application
         android:allowBackup="true"
@@ -8,11 +8,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DigitalSou9" >
+        android:theme="@style/Theme.DigitalSou9">
+        <activity
+            android:name=".RecommendationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyProductsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DrawerBaseActivity"
+            android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
             android:exported="false"
-            android:parentActivityName=".ProfileActivity"/>
+            android:parentActivityName=".ProfileActivity" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
@@ -30,7 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

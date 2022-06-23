@@ -115,7 +115,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(fullName, phone, email, "");
+                            User user = new User(fullName, phone, email, "https://static.wikia.nocookie.net/hunterxhunter/images/7/7c/Killua-2011.png/revision/latest?cb=20120115021804");
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

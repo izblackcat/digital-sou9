@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,19 +21,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zarkaoui.digitalsou9.classes.User;
+import com.zarkaoui.digitalsou9.databinding.ActivityProfileBinding;
 
-public class ProfileActivity extends AppCompatActivity {
+import java.nio.charset.StandardCharsets;
+
+public class ProfileActivity extends DrawerBaseActivity {
     private FirebaseUser user;
     private DatabaseReference databaseReference;
     private String userId;
 
+
     private Button editProfileBtn;
     private Button signOutBtn;
+
+    ActivityProfileBinding activityProfileBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        activityProfileBinding = ActivityProfileBinding.inflate(getLayoutInflater());
+        setContentView(activityProfileBinding.getRoot());
+        activityTitle("Profile");
 
         editProfileBtn = (Button) findViewById(R.id.editProfileBtn);
         signOutBtn = (Button) findViewById(R.id.signOutBtn);
@@ -57,7 +67,6 @@ public class ProfileActivity extends AppCompatActivity {
         final ImageView profilePic = findViewById(R.id.user_imageView);
 
 
-
         databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -68,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
                     String userEmail = userProfile.getEmail();
                     String userPhone = userProfile.getPhoneNumber();
                     String userPhoto = userProfile.getProfilePicture();
-
+                    Log.d("PHOTO", "onDataChange: " + userPhoto);
 
 //                    greeting.setText("Hello, " + userFullName + "!");
                     fullName.setText(userFullName);
