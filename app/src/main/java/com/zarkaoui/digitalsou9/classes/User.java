@@ -1,6 +1,7 @@
 package com.zarkaoui.digitalsou9.classes;
 
 public class User {
+    private String id;
     private String fullName;
     private String email;
     private String phoneNumber;
@@ -19,6 +20,10 @@ public class User {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setFullName(String fullName) {

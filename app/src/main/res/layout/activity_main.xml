@@ -42,6 +42,7 @@
                         app:cardElevation="6dp">
 
                         <LinearLayout
+                            android:id="@+id/clothesCategory"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -82,6 +83,7 @@
                         app:cardElevation="6dp">
 
                         <LinearLayout
+                            android:id="@+id/booksCategory"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -122,6 +124,7 @@
                         app:cardElevation="6dp">
 
                         <LinearLayout
+                            android:id="@+id/foodCategory"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -162,6 +165,7 @@
                         app:cardElevation="6dp">
 
                         <LinearLayout
+                            android:id="@+id/shoesCategory"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -202,6 +206,7 @@
                         app:cardElevation="6dp">
 
                         <LinearLayout
+                            android:id="@+id/furnitureCategory"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -242,6 +247,7 @@
                         app:cardElevation="6dp">
 
                         <LinearLayout
+                            android:id="@+id/technologyCategory"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -282,6 +288,7 @@
                         app:cardElevation="6dp">
 
                         <LinearLayout
+                            android:id="@+id/otherCategory"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"

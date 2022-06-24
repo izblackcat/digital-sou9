@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zarkaoui.digitalsou9">
-<uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DigitalSou9">
+        <activity
+            android:name=".OtherCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FurnitureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FoodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TechnologyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShoesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BooksActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ClothesActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".NewProductActivity"
             android:exported="false" />

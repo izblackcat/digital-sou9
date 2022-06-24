@@ -2,13 +2,11 @@ package com.zarkaoui.digitalsou9;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
@@ -22,19 +20,20 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.zarkaoui.digitalsou9.classes.Product;
 import com.zarkaoui.digitalsou9.databinding.ActivityNewProductBinding;
 import com.zarkaoui.digitalsou9.enums.ProductCategory;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -61,6 +60,7 @@ public class NewProductActivity extends DrawerBaseActivity implements View.OnCli
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private String userId;
+    private StorageTask uploadProductTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +108,11 @@ public class NewProductActivity extends DrawerBaseActivity implements View.OnCli
                 chooseProductImage();
                 break;
             case R.id.addProductBtn:
-                uploadProduct();
+                if (uploadProductTask != null && uploadProductTask.isInProgress()) {
+                    Toast.makeText(NewProductActivity.this, "Uploading already in progress", Toast.LENGTH_LONG).show();
+                } else{
+                    uploadProduct();
+                }
                 break;
         }
     }
@@ -127,7 +131,6 @@ public class NewProductActivity extends DrawerBaseActivity implements View.OnCli
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             productImgUri = data.getData();
             Picasso.get().load(productImgUri).into(productImg);
-//            productImg.setImageURI(productImgUri);
         }
 
     }
@@ -146,7 +149,6 @@ public class NewProductActivity extends DrawerBaseActivity implements View.OnCli
         String productLocation = editTextProductLocation.getText().toString().trim();
         String productCategory = categorySpinner.getSelectedItem().toString().trim();
         String productQuantity = editTextProductQuantity.getText().toString().trim();
-//        String imageUrl = editProductImg.getText().toString().trim();
 
         if(productName.isEmpty()){
             editTextProductName.setError("Product name is required!");
@@ -178,37 +180,44 @@ public class NewProductActivity extends DrawerBaseActivity implements View.OnCli
             return;
         }
 
-//        if(productDate.isEmpty()){
-//            editTextProductDate.setError("Product date is required!");
-//            editTextProductDate.requestFocus();
-//            return;
-//        }
+        if(productImgUri != null){
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(productImgUri));
+            uploadProductTask = fileReference.putFile(productImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(NewProductActivity.this, "The product was successfully added", Toast.LENGTH_LONG).show();
+                    /*Product product = new Product(productName, productDescription,productDate, productLocation, productPrice, productCategory, productQuantity, taskSnapshot.getUploadSessionUri().toString(), userId);
+                    String productId = databaseReference.push().getKey();
+                    databaseReference.child(productId).setValue(product);*/
 
+                    Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!urlTask.isSuccessful());
+                    Uri downloadUrl = urlTask.getResult();
 
-        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(productImgUri));
+                    //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
+                    Product product = new Product(productName, productDescription,productDate, productLocation, productPrice, productCategory, productQuantity, taskSnapshot.getUploadSessionUri().toString(), userId);
 
-        fileReference.putFile(productImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-            progressBar.setVisibility(View.VISIBLE);
-                Toast.makeText(NewProductActivity.this, "The product was successfully added", Toast.LENGTH_LONG).show();
-                Product product = new Product(productName, productDescription,productDate, productLocation, productPrice, productCategory, productQuantity, taskSnapshot.getUploadSessionUri().toString(), userId);
-                String productId = databaseReference.push().getKey();
-                databaseReference.child(productId).setValue(product);
-                progressBar.setVisibility(View.GONE);
-                startActivity(new Intent(NewProductActivity.this, MainActivity.class));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(NewProductActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.GONE);
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        });
+                    String productId = databaseReference.push().getKey();
+                    databaseReference.child(productId).setValue(product);
+
+                    progressBar.setVisibility(View.GONE);
+                    startActivity(new Intent(NewProductActivity.this, MainActivity.class));
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(NewProductActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            });
+
+        } else {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_LONG).show();
+        }
     }
 }
