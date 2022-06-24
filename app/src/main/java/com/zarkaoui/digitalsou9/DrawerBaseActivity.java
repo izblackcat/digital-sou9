@@ -49,8 +49,12 @@ public class DrawerBaseActivity extends AppCompatActivity implements  Navigation
                 startActivity(new Intent(this, MainActivity.class));
                 overridePendingTransition(0, 0);
                 break;
-            case R.id.products:
+            case R.id.myProducts:
                 startActivity(new Intent(this, MyProductsActivity.class));
+                overridePendingTransition(0, 0);
+                break;
+            case R.id.newProduct:
+                startActivity(new Intent(this, NewProductActivity.class));
                 overridePendingTransition(0, 0);
                 break;
             case R.id.recommendations:
