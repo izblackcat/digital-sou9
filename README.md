@@ -2,6 +2,6 @@
 
 ## Screenshots of the app : 
 
-![](https://github.com/zarkaouii/digital-sou9/blob/main/screenshots/screen1.jpg?raw=true =20x25)
+![](https://github.com/zarkaouii/digital-sou9/blob/main/screenshots/screen1.jpg =20x50)
 
 
